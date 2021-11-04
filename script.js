@@ -1,72 +1,30 @@
-var randomColors = ['green','red','yellow','blue'];
-var generatedColors = [];
-var userColors = [] ;
-var l = 0;
-var gameStart = false; 
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Simon</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Press+Start+2P"
+      rel="stylesheet"
+    />
+  </head>
 
-function playAudio(colorSequence){
-    var audio = new Audio('sounds/' + colorSequence + '.mp3');
-    audio.play();
-    audio.muted = false;
-}
-function keyPressed(colorSequence){
-    $('.'+colorSequence).addClass("pressed");
-    setTimeout(function(){
-    $('.'+colorSequence).removeClass("pressed");
-    },100);
-}
+  <body>
+    <h1 id="level-title">Press in screen</h1>
+    <div class="container">
+      <div lass="row">
+        <div type="button" id="green" class="btn green"></div>
 
-function checkWin(lastEnteredIndex){
-    if(generatedColors[lastEnteredIndex] === userColors[lastEnteredIndex]){
-        if(generatedColors.length === userColors.length){
-            setTimeout(function(){
-                generateSequence();
-            },1000);
-        }
-        
-    }
-    else{
-        playAudio("wrong");
-      $("body").addClass("game-over");
-      $("#level-title").text("Game Over, Press Any Key to Restart ,lost at level "+ l);
+        <div type="button" id="red" class="btn red"></div>
+      </div>
 
-      setTimeout(function () {
-        $("body").removeClass("game-over");
-      }, 200);
-
-      startAgain();
-
-    }
-}
-function startAgain(){
-    generatedColors = [];
-    gameStart = false; 
-    l = 0;
-}
-function generateSequence(){
-    userColors = [];
-    l++;
-    $("h1").text("Level " + l);
-    var randomNumber  = Math.floor(Math.random()*4);
-    var randomColorSequence = randomColors[randomNumber];
-    generatedColors.push(randomColorSequence);
-    $('#'+randomColorSequence).fadeOut(200).fadeIn(100).fadeOut(200).fadeIn(100);
-    playAudio(randomColorSequence);
-}
-
-$(document).keypress(function(){
-    if(!gameStart){
-        generateSequence();
-        gameStart = true;
-        $("h1").text("Level " + l);
-    }
-})
-
-
-$(".btn").click(function(){
-    var userClickedColor = $(this).attr("id");
-    userColors.push(userClickedColor);
-    playAudio(userClickedColor);
-    keyPressed(userClickedColor);
-    checkWin(userColors.length - 1);
-})
+      <div class="row">
+        <div type="button" id="yellow" class="btn yellow"></div>
+        <div type="button" id="blue" class="btn blue"></div>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
